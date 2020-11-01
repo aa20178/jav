@@ -1,7 +1,7 @@
 # jav
 programmes en java 
 
-L'organisation est la suivante :
+L'organisation est la suivante : (ouvrir le readme pour tout voir)
 
 Normalement, avec un IDE on a : 
 
