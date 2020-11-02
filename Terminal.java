@@ -1,4 +1,7 @@
+package tp1;
+import java.util.*;
 import java.io.*;
+
 public class Terminal{    
     static BufferedReader in =
 	new BufferedReader(new InputStreamReader(System.in));
@@ -126,4 +129,5 @@ class TerminalException extends RuntimeException{
 	ex = e;
     }
 }
+
 
