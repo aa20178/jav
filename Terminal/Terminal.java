@@ -1,4 +1,4 @@
-package tp1;
+package Terminal;
 import java.util.*;
 import java.io.*;
 
