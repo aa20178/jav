@@ -5,7 +5,9 @@ public class DossierCandidatureGER
 	private String nom;
 	private String numero;
 	private String statut ; 
-	private int note; 
+	
+	private int noteE; 
+	private int noteO; 
 	private boolean emarge; 
 	
 	public boolean getEmarge()
@@ -28,7 +30,6 @@ public class DossierCandidatureGER
 	  this.nom = nom; 
 	  this.numero = numero; 
 	  this.emarge = false; 
-	  this.note = 0 ;
 	  this.statut = "ENREGISTRE";
   }
   
@@ -42,21 +43,42 @@ public class DossierCandidatureGER
   
   public void enregistrerNoteEpreuveEcrite(int note)
   {
-	  note = note ;
-	  this.statut = "NOTE_ECRIT_TRANSMISE";
+	  if (emarge = true )
+	  {
+		  noteE = note ;
+		  this.statut = "NOTE_ECRIT_TRANSMISE";
+	  }
+	  else 
+	  {
+		  
+	  }
 
   }
   
   public void publierResultatEcrit()
   {
-	  //Terminal.
+	  Terminal.ecrireStringln("Note: " + noteE + "\nStatut: " + statut);
   }
-  public void enregistrerNoteEpreuveOrale(int note){
+  public void enregistrerNoteEpreuveOrale(int note)
+  {
+	  noteO = note ;
+	  	  this.statut = "NOTE_ORAL_TRANSMISE";
+	  
   }
-  public void enregistrerAbsenceALOral(){
+  public void enregistrerAbsenceALOral()
+  {
+	  noteO = 0 ;
+	  this.statut = "NOTE_ORAL_TRANSMISE";
+	  
   }
-  public void publierResultatFinal(){
+  public void publierResultatFinal()
+  {
+  	  Terminal.ecrireStringln("Note Ecrite: " + noteE + "\nNote Oral: " + noteO + "\nStatut: " + statut);
   }
-  public String toString(){return "";  }
+  public String toString()
+  {
+	  String toto =  "Nom :" + nom + "\nNumero: " + numero+ "\nStatut : " + statut ;
+	   + Note Ecrite: " + noteE + "\nNote Oral: " + noteO + "\nStatut: " + statut;  
+  }
   
 }
