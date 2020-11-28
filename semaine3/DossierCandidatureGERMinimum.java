@@ -1,6 +1,4 @@
-package semaine3;
-import Terminal.* ;
-import java.util.concurrent.ThreadLocalRandom;
+
 public class DossierCandidatureGER
 {
   // Ici des attributs
@@ -25,30 +23,6 @@ public class DossierCandidatureGER
 	}
 	
   // constructeur
-  public DossierCandidatureGER(String nom, String numero)
-  {
-	  this.nom = nom; 
-	  this.numero = numero; 
-	  this.statut = "ENREGISTRE";
-  }
-  
-    public DossierCandidatureGER( String numero)
-  {
-	  int randomNameNum = ThreadLocalRandom.current().nextInt(0, 350);
-	  this.nom = nom + randomNameNum; 
-	  this.numero = numero; 
-	  this.statut = "ENREGISTRE";
-  }
-  
-      public DossierCandidatureGER()
-  {
-	  int randomNameNum = ThreadLocalRandom.current().nextInt(0, 350);
-	  int randomNum = ThreadLocalRandom.current().nextInt(555, 5555);
-
-	  this.nom = "toto"+randomNameNum+""; 
-	  this.numero = ""+randomNum; 
-	  this.statut = "ENREGISTRE";
-  }
   
   
   public void enregistrerEmargementEpreuveEcrite() throws Exception
