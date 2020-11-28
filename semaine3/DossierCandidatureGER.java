@@ -1,3 +1,4 @@
+package semaine3;
 import Terminal.* ;
 import java.util.concurrent.ThreadLocalRandom;
 public class DossierCandidatureGER
@@ -201,13 +202,38 @@ public class DossierCandidatureGER
 	  return toto; 
   }
   
-  public static int main (char[] args)
+  public static void main (String[] args)
   {
 	  DossierCandidatureGER dossier = new DossierCandidatureGER("Etudiant","444");
+	  try
+	  {
 	  Terminal.ecrireStringln(dossier.toString());
-	  return 0;
+
+	  dossier.enregistrerEmargementEpreuveEcrite();
+  	  Terminal.ecrireStringln(dossier.toString());
+
+	  dossier.enregistrerNoteEpreuveEcrite(16);
+	  dossier.publierResultatEcrit();
+
+	  dossier.admissible();
+   	  Terminal.ecrireStringln(dossier.toString());
+   	  
+	  dossier.enregistrerNoteEpreuveOrale(11);
+   	  Terminal.ecrireStringln(dossier.toString());
+
+	  dossier.admis();
+   	  Terminal.ecrireStringln(dossier.toString());
+
+	  
+	  
+ }
+ catch (Exception e)
+ {
+      e.printStackTrace(); 
+	  return ;
 	  
   }
+}
   
   
   
