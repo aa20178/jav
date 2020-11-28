@@ -1,4 +1,5 @@
 import Terminal.* ;
+import java.util.concurrent.ThreadLocalRandom;
 public class DossierCandidatureGER
 {
   // Ici des attributs
@@ -8,12 +9,6 @@ public class DossierCandidatureGER
 	
 	private int noteE; 
 	private int noteO; 
-	private boolean emarge; 
-	
-	public boolean getEmarge()
-	{
-		return emarge;
-	}
 
 	public String getNom()
 	{
@@ -22,6 +17,10 @@ public class DossierCandidatureGER
 	public String getNumero()
 	{
 		return numero;
+	}	
+	public String getStatut()
+	{
+		return statut;
 	}
 	
   // constructeur
@@ -29,56 +28,189 @@ public class DossierCandidatureGER
   {
 	  this.nom = nom; 
 	  this.numero = numero; 
-	  this.emarge = false; 
+	  this.statut = "ENREGISTRE";
+  }
+  
+    public DossierCandidatureGER( String numero)
+  {
+	  int randomNameNum = ThreadLocalRandom.current().nextInt(0, 350);
+	  this.nom = nom + randomNameNum; 
+	  this.numero = numero; 
+	  this.statut = "ENREGISTRE";
+  }
+  
+      public DossierCandidatureGER()
+  {
+	  int randomNameNum = ThreadLocalRandom.current().nextInt(0, 350);
+	  int randomNum = ThreadLocalRandom.current().nextInt(555, 5555);
+
+	  this.nom = "toto"+randomNameNum+""; 
+	  this.numero = ""+randomNum; 
 	  this.statut = "ENREGISTRE";
   }
   
   
-  public void enregistrerEmargementEpreuveEcrite()
+  public void enregistrerEmargementEpreuveEcrite() throws Exception
   {
-	  emarge = true ; 
-	  this.statut = "EMARGE";
+	  	  if (this.statut == "ENREGISTRE" )
+		this.statut = "EMARGE";
+			  else 
+	  {
+		  throw new Exception("STATUT INCORRECT");
+	  }
 
   }
   
-  public void enregistrerNoteEpreuveEcrite(int note)
+  public void enregistrerNoteEpreuveEcrite(int note) throws Exception
   {
-	  if (emarge = true )
+	  if (this.statut == "EMARGE" )
 	  {
 		  noteE = note ;
 		  this.statut = "NOTE_ECRIT_TRANSMISE";
 	  }
+	  	  else if (this.statut == "ENREGISTRE" )
+	  {
+		  throw new Exception("EMARGEMENT NON FAIT");
+	  }
+	  
 	  else 
 	  {
-		  
+		  throw new Exception("ECRIT DEJA TRANSMIS");
 	  }
 
   }
   
   public void publierResultatEcrit()
   {
-	  Terminal.ecrireStringln("Note: " + noteE + "\nStatut: " + statut);
+	  Terminal.ecrireStringln("Note ecrite: " + noteE + "\nStatut: " + statut+"\n");
   }
-  public void enregistrerNoteEpreuveOrale(int note)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    public void admissible() throws Exception
   {
-	  noteO = note ;
-	  	  this.statut = "NOTE_ORAL_TRANSMISE";
+	  if (this.statut == "NOTE_ECRIT_TRANSMISE" )
+	  {
+		  	  if (this.noteE < 10 )
+		  	  {
+						  this.statut = "NON_ADMISSIBLE";
+					
+  
+			  }
+			  else 		  this.statut = "ADMISSIBLE";
+
+
+	  }
+	  	  	  else if (this.statut == "ENREGISTRE" ||this.statut == "EMARGE")
+	  {
+		  throw new Exception("NON EMARGE/ENREGISTRE");
+	  }
+	  else 		  throw new Exception("ADMISSIBILITE DEJA ENREGISTRE");
+
+ }
+  
+  
+  
+  
+  
+  
+  
+  public void enregistrerNoteEpreuveOrale(int note) throws Exception
+  {
+	  if (this.statut == "ADMISSIBLE" )
+	  {
+		  noteO = note ;
+		  this.statut = "NOTE_ORAL_TRANSMISE";
+	  }
+
+	  else if (this.statut == "ABSENT_ORAL" )
+	  {
+  		  throw new Exception("ABSENT NE PEUT PAS AVOIR D'ORAL");
+	  }
+
+  	  else if (this.statut == "ENREGISTRE" || this.statut == "EMARGE" ||this.statut == "NOTE_ECRIT_TRANSMISE" || this.statut == "NON_ADMISSIBLE"|| statut =="NOTE_ORAL_TRANSMISE")
+  	  {
+		  		  throw new Exception("STATUT INCORRECT");
+
+	  }
+
+
+  	  else 
+	  {
+		  throw new Exception("DEJA ADMIS/JETE");
+	  }
+
+	  
+			  
+  }
+  public void enregistrerAbsenceALOral() throws Exception
+  {
+	  	  if (this.statut == "ADMISSIBLE" )
+	  	  {
+			  this.statut = "ABSENT_ORAL";
+		  }
+		    	  else 
+	  {
+		  throw new Exception("STATUT INCORRECT");
+	  }
 	  
   }
-  public void enregistrerAbsenceALOral()
+  
+    
+    public void admis() throws Exception
   {
-	  noteO = 0 ;
-	  this.statut = "NOTE_ORAL_TRANSMISE";
-	  
-  }
-  public void publierResultatFinal()
+	  if (this.statut == "NOTE_ORAL_TRANSMISE" )
+	  {
+		  	  if (this.noteO > 10 )
+		  	  {
+						  this.statut = "ADMIS";
+					
+  
+			  }
+			  else 		  this.statut = "NON ADMIS";
+
+
+	  }
+	  	  	  else throw new Exception("STATUT INCORRECT");
+
+ }
+  
+  
+  
+  
+  
+  
+  
+  public void publierResultatFinal() throws Exception
   {
-  	  Terminal.ecrireStringln("Note Ecrite: " + noteE + "\nNote Oral: " + noteO + "\nStatut: " + statut);
+  	  Terminal.ecrireStringln("Note Ecrite: " + noteE + "\nNote Orale: " + noteO + "\nStatut: " + statut+"\n");
   }
   public String toString()
   {
-	  String toto =  "Nom :" + nom + "\nNumero: " + numero+ "\nStatut : " + statut ;
-	   + Note Ecrite: " + noteE + "\nNote Oral: " + noteO + "\nStatut: " + statut;  
+	  String toto =  "Nom :" + nom + "\nNumero: " + numero+ "\nStatut : " + statut +"\n";
+	  return toto; 
   }
+  
+  public static int main (char[] args)
+  {
+	  DossierCandidatureGER dossier = new DossierCandidatureGER("Etudiant","444");
+	  Terminal.ecrireStringln(dossier.toString());
+	  return 0;
+	  
+  }
+  
+  
+  
+  
   
 }
