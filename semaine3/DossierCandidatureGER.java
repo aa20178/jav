@@ -1,5 +1,3 @@
-package semaine3;
-import Terminal.* ;
 import java.util.concurrent.ThreadLocalRandom;
 public class DossierCandidatureGER
 {
@@ -53,12 +51,17 @@ public class DossierCandidatureGER
   
   public void enregistrerEmargementEpreuveEcrite() throws Exception
   {
-	  	  if (this.statut == "ENREGISTRE" )
-		this.statut = "EMARGE";
-			  else 
-	  {
-		  throw new Exception("STATUT INCORRECT");
-	  }
+	  if (this.statut == "ENREGISTRE" )
+		  this.statut = "EMARGE";
+	  else if (this.statut == "EMARGE")
+			  {
+				throw new Exception("DEJA EMARGE");
+
+			  }
+		else 
+		{
+			  throw new Exception("DEJA EMARGE :" + statut);
+		}
 
   }
   
@@ -81,18 +84,11 @@ public class DossierCandidatureGER
 
   }
   
-  public void publierResultatEcrit()
+  public void publierResultatEcrit() throws Exception
   {
+	  admissible();
 	  Terminal.ecrireStringln("Note ecrite: " + noteE + "\nStatut: " + statut+"\n");
   }
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -134,14 +130,11 @@ public class DossierCandidatureGER
 		  this.statut = "NOTE_ORAL_TRANSMISE";
 	  }
 
-	  else if (this.statut == "ABSENT_ORAL" )
-	  {
-  		  throw new Exception("ABSENT NE PEUT PAS AVOIR D'ORAL");
-	  }
+	 
 
   	  else if (this.statut == "ENREGISTRE" || this.statut == "EMARGE" ||this.statut == "NOTE_ECRIT_TRANSMISE" || this.statut == "NON_ADMISSIBLE"|| statut =="NOTE_ORAL_TRANSMISE")
   	  {
-		  		  throw new Exception("STATUT INCORRECT");
+		  		  throw new Exception("STATUT INCORRECT: " +statut );
 
 	  }
 
@@ -158,11 +151,11 @@ public class DossierCandidatureGER
   {
 	  	  if (this.statut == "ADMISSIBLE" )
 	  	  {
-			  this.statut = "ABSENT_ORAL";
+			  this.statut = "NON_ADMIS";
 		  }
 		    	  else 
 	  {
-		  throw new Exception("STATUT INCORRECT");
+		  		  throw new Exception("STATUT INCORRECT: " +statut );
 	  }
 	  
   }
@@ -178,11 +171,12 @@ public class DossierCandidatureGER
 					
   
 			  }
-			  else 		  this.statut = "NON ADMIS";
+			  else 		  this.statut = "NON_ADMIS";
 
 
 	  }
-	  	  	  else throw new Exception("STATUT INCORRECT");
+	 
+	  else 		  throw new Exception("STATUT INCORRECT: " +statut );
 
  }
   
@@ -194,6 +188,8 @@ public class DossierCandidatureGER
   
   public void publierResultatFinal() throws Exception
   {
+	  
+	  admis();
   	  Terminal.ecrireStringln("Note Ecrite: " + noteE + "\nNote Orale: " + noteO + "\nStatut: " + statut+"\n");
   }
   public String toString()
@@ -215,15 +211,9 @@ public class DossierCandidatureGER
 	  dossier.enregistrerNoteEpreuveEcrite(16);
 	  dossier.publierResultatEcrit();
 
-	  dossier.admissible();
-   	  Terminal.ecrireStringln(dossier.toString());
-   	  
-	  dossier.enregistrerNoteEpreuveOrale(11);
-   	  Terminal.ecrireStringln(dossier.toString());
-
-	  dossier.admis();
-   	  Terminal.ecrireStringln(dossier.toString());
-   	  dossier.publierResultatFinal();
+   	 dossier.enregistrerAbsenceALOral();
+   	 
+  	  Terminal.ecrireStringln(dossier.toString());
 
 	  
 	  
