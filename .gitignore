@@ -1,6 +1,16 @@
-# exclude everything except directory foo/bar
- .project
- .class
- .pdf
-.metadata
-.plugins
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
