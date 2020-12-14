@@ -1,0 +1,6 @@
+# exclude everything except directory foo/bar
+ .project
+ .class
+ .pdf
+.metadata
+.plugins
